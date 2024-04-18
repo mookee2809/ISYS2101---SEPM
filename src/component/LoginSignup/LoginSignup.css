@@ -64,11 +64,15 @@
     color: purple;
     cursor: pointer;
 }
-.submit-container{
+.submit-container {
+    width: 100%; 
     display: flex;
+    justify-content: center; 
     gap: 30px;
     margin: 60px auto;
 }
+
+
 .submit{
     display: flex;
     justify-content: center;
@@ -81,4 +85,12 @@
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
+    margin: 0 auto;
+}
+
+.container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
