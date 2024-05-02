@@ -1,0 +1,25 @@
+body{
+    height: 100vh;
+}
+.bill-option{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    align-items: center;
+    gap: 100px;
+    padding: 20px 0px;
+}
+hr{
+    color: black;
+    height: 2;
+    width: 100%;
+}
+.bill-format{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    align-items: center;
+    gap: 40px;
+    padding: 20px 0px;
+
+}.bill-format img{
+   margin-left: 70px;
+}

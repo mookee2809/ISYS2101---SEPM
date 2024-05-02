@@ -1,0 +1,21 @@
+.submit-container {
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+    gap: 30px;
+    margin: 60px auto;
+}
+
+.submit1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: white;
+    background:purple;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
