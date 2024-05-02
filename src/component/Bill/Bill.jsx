@@ -30,7 +30,7 @@ export const Bill = () => {
             <img src={remove_icon} style={{height:'75px', width:'80px'}}/>
         </div>
         <hr/>
-        <div className='button2'> Add Bill </div>
+        <button type="submit" className="button2"><Link style = {{color:'black'}} to='/addbill'> Add Bill </Link> </button>
               
 
                     <button type="submit" className="submit"><Link style = {{color:'white'}} to='/homepage'> Back to Homepage </Link> </button>

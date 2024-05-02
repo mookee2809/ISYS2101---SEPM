@@ -14,6 +14,7 @@ import { Spending } from './component/Spending/Spending'
 import { Bill } from './component/Bill/Bill'
 import { AddBalance } from './component/Account/AddBalance'
 import { ReduceBalance } from './component/Account/ReduceBalance'
+import { AddBill } from './component/Bill/Addbill'
 
 function App() {
   return (
@@ -25,7 +26,6 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/Account" element={<Account />} />
@@ -42,7 +42,8 @@ function App() {
 
       <Routes>
       <Route path='/addbalance' element ={<AddBalance/> }/>
-        <Route path='/reducebalance' element ={<ReduceBalance/> }/>
+      <Route path='/reducebalance' element ={<ReduceBalance/> }/>
+      <Route path='/addbill' element ={<AddBill/> }/>
       </Routes>
 
      

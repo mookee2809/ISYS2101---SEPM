@@ -46,15 +46,20 @@ export const ReduceBalance = () => {
             Account Balance: 
             <br></br>
             ${balance.toFixed(2)}</h3>
-            <br></br>
             <div className='modify'>
                 <div className='add'>
-                    <h2> Reduce Balance </h2>
+                <form>
+                    <label>
+                        <h2 style={{textAlign:"center"}}>Reduce Amount $:</h2>
+                        <input type="number" name="balance" style={{height:"40px", width:"250px", fontSize:"25px"}} />
+                    </label>
+                    <input type="submit" value="Submit" className='button3' style={{left:"25%"}}/>
+                </form>
+                <br></br>
                 </div>
 
-
             </div>
-
+                    <button type="submit" className="submit"><Link style = {{color:'white'}} to='/account'> Back to Account </Link> </button>
                     <button type="submit" className="submit"><Link style = {{color:'white'}} to='/homepage'> Back to Homepage </Link> </button>
             </div>
         </div>
