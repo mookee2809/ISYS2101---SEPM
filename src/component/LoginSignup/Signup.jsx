@@ -9,6 +9,7 @@ import email_icon from '../assets/email.png'
 export const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('')
     const navigate = useNavigate();
 
     const handleSignup = async (event) => {
@@ -18,7 +19,7 @@ export const Signup = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password, email }),
         });
         const data = await response.json();
         if (response.ok) {
@@ -43,7 +44,7 @@ export const Signup = () => {
                     </div>
                     <div className='input'>
                         <img src={email_icon} alt=''/>
-                        <input type="password" placeholder='Email' value={password} onChange={e => setPassword(e.target.value)} />
+                        <input type="email" placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
                     </div>
                     <div className='input'>
                         <img src={password_icon} alt=''/>

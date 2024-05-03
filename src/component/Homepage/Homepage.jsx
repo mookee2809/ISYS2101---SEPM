@@ -54,10 +54,14 @@ const Homepage = () => {
           </div>
           <div class="about-col">
             <h3>Total Spending $ </h3>
+                <br></br>
+
             <div className='button'><Link to="/Spending"> Check Details ! </Link></div>
           </div>
           <div class="about-col">
             <h3>Bill Reminder $ </h3>
+                <br></br>
+
             <div className='button'><Link to="/Bill"> Check Bill Details !</Link></div>
           </div>
         </div>

@@ -50,7 +50,7 @@ export const AddBill = () => {
             </form2>
             
             <div className='submit-container'>
-            <button type="submit" className="submit1"><Link style = {{color:'white'}} to='/ContactSubmit'> Submit </Link> </button>
+            <button type="submit" className="submit1"><Link style = {{color:'white'}} to='/'> Submit </Link> </button>
             <button type="submit" className="submit1"><Link style = {{color:'white'}} to='/homepage'> Back to Homepage </Link> </button>
             </div>
         </div>
@@ -58,5 +58,7 @@ export const AddBill = () => {
     </div>
   )
 };
+
+
 
 

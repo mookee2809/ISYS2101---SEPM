@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'chartjs'; // corrected import statement
 import Navbar from '../Navbar/Navbar';
+import './Spending.css'
  
 export const Spending = () => {
   const chartRef = useRef(null);
@@ -31,15 +32,30 @@ export const Spending = () => {
   }, []);
  
   return (
-<div>
-<Navbar />
- 
+  <div>
+    <Navbar />
+    
       <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
  
-      <div className='about-container'>
- 
-        <div className='header'>
-<div className='text'> Total Spending $ </div>
+      <div className='about-container2'>
+        <div className='header1'>
+          <div className='text'> Total Spending History $ </div>
+        <div className='spending-option'>
+          
+            <p>Bill Paid</p>
+            <p> Category </p>
+            <p>Price</p>
+            <p>Date</p>
+        </div>
+        <hr/> 
+
+        <div className='spending-format'>
+            <p> Jordan 1 Mocha </p>
+            <p> Lifestyle</p>
+            <p> $400 </p>
+            <p> 5 May 2024 </p>
+        </div>
+        <hr/>
  
           <button type="submit" className="submit"><Link style={{ color: 'white' }} to='/homepage'> Back to Homepage </Link> </button>
 </div>
