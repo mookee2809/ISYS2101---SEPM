@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Chart }from 'chart.js'; // corrected import statement
+
 import Navbar from '../Navbar/Navbar';
 import './Spending.css'
  
