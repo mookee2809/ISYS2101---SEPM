@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './LoginSignup.css';
 import user_icon from '../assets/profile.png';
 import password_icon from '../assets/password.png';
+
 
 export const Login = () => {
     const [username, setUsername] = useState('');
@@ -44,7 +46,8 @@ export const Login = () => {
                         <input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
                 </div>
-                <div className="forgot-password">Forgot Password?<span> Click Here! </span></div>
+                <div className="forgot-password">Forgot Password?<span> <Link to="/Forgotpass">Click Here!</Link> </span></div>
+                <div className='forgot-password'> No account yet? <span> <Link to="/signup">Sign Up Here!</Link></span></div>
                 <div className="submit-container">
                     <button type="submit" className="submit">Login</button>
                 </div>

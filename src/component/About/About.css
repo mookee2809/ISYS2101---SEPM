@@ -1,0 +1,18 @@
+.about-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%; 
+    border-radius: 50px;
+    margin: auto;
+    margin-top: 70px;
+    background: white;
+    padding-bottom: 50px;
+}
+p{
+    text-align: center;
+    line-height: 2;
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 50px;
+    padding-right: 50px;
+}

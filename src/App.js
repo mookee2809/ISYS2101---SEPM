@@ -1,27 +1,53 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Login } from './component/LoginSignup/Login';
 import { Signup } from './component/LoginSignup/Signup';
-import Homepage from './component/Home/Homepage';
-
-
+import Homepage from './component/Homepage/Homepage';
+import { Forgotpass } from './component/LoginSignup/Forgotpass';
+import { Forgotsub } from './component/LoginSignup/Forgotsub'
+import { About } from './component/About/About'
+import { Contact } from './component/Contact/Contact'
+import { Contactsubmit } from './component/Contact/Contactsubmit';
+import { Account } from './component/Account/Account'
+import { Spending } from './component/Spending/Spending'
+import { Bill } from './component/Bill/Bill'
+import { AddBalance } from './component/Account/AddBalance'
+import { ReduceBalance } from './component/Account/ReduceBalance'
+import { AddBill } from './component/Bill/Addbill'
+import SpendingChart from './component/Spending/SpendingChart';
 function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/signup">Sign Up</Link></li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/homepage" element={<Homepage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/Forgotpass" element={<Forgotpass />} />
+        <Route path="/Forgotsub" element={<Forgotsub />} />
+      </Routes>
+
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/homepage" element={<Homepage />} />
+        <Route path="/Account" element={<Account />} />
+        <Route path="/SpendingChart" element={<SpendingChart />} />
+        <Route path="/Spending" element={<Spending />} />
+        <Route path="/Bill" element={<Bill/>} />
+      </Routes>
+
+      <Routes>
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/contactsubmit" element={<Contactsubmit />} />
+      </Routes>
+
+      <Routes>
+      <Route path='/addbalance' element ={<AddBalance/> }/>
+      <Route path='/reducebalance' element ={<ReduceBalance/> }/>
+      <Route path='/addbill' element ={<AddBill/> }/>
+      </Routes>
+
+     
+
     </Router>
   );
 }

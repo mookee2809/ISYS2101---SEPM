@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import user_icon from '../assets/profile.png';
 import password_icon from '../assets/password.png';
+import email_icon from '../assets/email.png'
 
 export const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('')
     const navigate = useNavigate();
 
     const handleSignup = async (event) => {
@@ -16,12 +19,12 @@ export const Signup = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password, email }),
         });
         const data = await response.json();
         if (response.ok) {
             alert('User registered successfully! Please log in.'); 
-            navigate('/login');
+            navigate('/');
         } else {
             alert(data.message); 
         }
@@ -40,12 +43,17 @@ export const Signup = () => {
                         <input type="text" placeholder='Username' value={username} onChange={e => setUsername(e.target.value)} />
                     </div>
                     <div className='input'>
+                        <img src={email_icon} alt=''/>
+                        <input type="email" placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+                    </div>
+                    <div className='input'>
                         <img src={password_icon} alt=''/>
                         <input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
                 </div>
+                <div className='forgot-password'> Already Have Account? <span> <Link to="/"> Log in Here!</Link></span></div>
                 <div className="submit-container">
-                    <button type="submit" className="submit">Sign Up</button>
+                <button type="submit" className="submit">Sign Up</button>
                 </div>
             </form>
         </div>
