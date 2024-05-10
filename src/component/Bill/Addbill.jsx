@@ -19,11 +19,13 @@ export const AddBill = () => {
             <br></br>
             <br></br>
                 <select id="Category" name="" style={{width:"350px", height:"35px", textAlign:"center", fontSize:"15px"}}>
-                    <option value="None">None</option>
+
+                    <option value="Others">Others</option>
                     <option value="Utilities">Utilities</option>
-                    <option value="lifestyle">Lifestle</option>
+                    <option value="lifestyle">Lifestyle</option>
                     <option value="Transport">Transport</option>
                     <option value="Entertainment">Entertainment</option>
+
                 </select>
                 <br></br>
                 <br></br>

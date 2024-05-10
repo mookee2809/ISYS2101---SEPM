@@ -42,6 +42,9 @@ const Homepage = () => {
     return (
         <div>
             <Navbar/>
+            <Link to="/spendingchart">
+        <button>View Spending Chart</button>
+      </Link>
 
     <div className='option'> 
         <div class="balance">
