@@ -12,7 +12,7 @@ const SpendingChart = () => {
 
     useEffect(() => {
         const fetchSpendingData = async () => {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             if (!token) {
                 console.error('Authorization token is missing');
                 alert('You are not logged in. Please log in to view this data.');
