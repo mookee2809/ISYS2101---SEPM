@@ -1,68 +1,136 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Chart }from 'chart.js'; // corrected import statement
-
 import Navbar from '../Navbar/Navbar';
-import './Spending.css'
- 
+import { decodeJWT } from '../utils/decodeJWT'; 
+import SpendingChart from './SpendingChart';
+import remove_icon from '../assets/remove.png';
+import './Spending.css';
+
 export const Spending = () => {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
- 
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [refreshTrigger, setRefreshTrigger] = useState(0); // Trigger for refreshing the chart
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   useEffect(() => {
-    if (chartInstance.current) {
-    }
-    const myChartRef = chartRef.current.getContext("2d");
-    chartInstance.current = new Chart(myChartRef, {
-      type: 'pie',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow'],
-        datasets: [{
-          data: [30, 40, 50],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-        }],
-      },
-    });
-    return () => {
-      <canvas ref={chartRef} />
+    const fetchTransactions = async () => {
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        setError('No token found, user is likely not logged in.');
+        setLoading(false);
+        return;
+      }
+      
+      const user = decodeJWT(token);
+      if (!user || !user.id) {
+        setError('Failed to retrieve user information from token.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5000/api/spending/transactions/${user.id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+        }
+
+        const data = await response.json();
+        setTransactions(data);
+        setCategories([...new Set(data.map(transaction => transaction.category))]); // Extract unique categories
+      } catch (error) {
+        setError(`Failed to fetch transactions: ${error.message}`);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
     };
-  }, []);
- 
+
+    fetchTransactions();
+  }, [refreshTrigger]);
+
+  const handleRemoveTransaction = async (transactionId) => {
+    const token = sessionStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:5000/api/spending/transactions/${transactionId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to remove transaction: ${errorData.message || response.statusText}`);
+      }
+      setTransactions(prevTransactions => prevTransactions.filter(transaction => transaction._id !== transactionId));
+      setRefreshTrigger(prev => prev + 1); // Update the refresh trigger to refresh the chart
+      alert('Transaction removed successfully!');
+    } catch (error) {
+      console.error(`Error removing transaction:`, error);
+      alert(`Failed to remove transaction: ${error.message}`);
+      setError(error.message);
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const filteredTransactions = selectedCategory
+    ? transactions.filter(transaction => transaction.category === selectedCategory)
+    : transactions;
+
   return (
-  <div>
-    <Navbar />
-    
-      <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
- 
+    <div>
+      <Navbar />
       <div className='about-container2'>
         <div className='header1'>
-          <div className='text'> Total Spending History $ </div>
-        <div className='spending-option'>
-          
-            <p>Bill Paid</p>
-            <p> Category </p>
-            <p>Price</p>
-            <p>Date</p>
+          <div className='text'>Total Spending History $</div>
+          <SpendingChart refreshTrigger={refreshTrigger} />
+          <div>
+            <label htmlFor="category-select">Filter by category:</label>
+            <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+              <option value="">All</option>
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+          {loading && <p>Loading transactions...</p>}
+          {error && <p>Error: {error}</p>}
+          {!loading && !error && filteredTransactions.length > 0 ? (
+            filteredTransactions.map((transaction, index) => (
+              <div key={index} className='spending-format'>
+                <p>{transaction.description || 'No Description'}</p>
+                <p>{transaction.category || 'No Category'}</p>
+                <p>${transaction.amount}</p>
+                <p>{new Date(transaction.date).toLocaleDateString()}</p>
+                <button onClick={() => handleRemoveTransaction(transaction._id)}>
+                  <img src={remove_icon} style={{ height: '25px', width: '20px' }} alt="Remove Transaction" />
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No transactions found.</p>
+          )}
+          <hr/>
+          <button type="submit" className="submit">
+            <Link style={{ color: 'white' }} to='/homepage'>Back to Homepage</Link>
+          </button>
         </div>
-        <hr/> 
-
-        <div className='spending-format'>
-            <p> Jordan 1 Mocha </p>
-            <p> Lifestyle</p>
-            <p> $400 </p>
-            <p> 5 May 2024 </p>
-        </div>
-        <hr/>
- 
-          <button type="submit" className="submit"><Link style={{ color: 'white' }} to='/homepage'> Back to Homepage </Link> </button>
-</div>
-</div>
-</div>
+      </div>
+    </div>
   );
 };
- 
+
 export default Spending;
