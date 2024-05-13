@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart as ChartJS, PieController, ArcElement, Legend, Tooltip } from 'chart.js';
 import Navbar from '../Navbar/Navbar';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 ChartJS.register(PieController, ArcElement, Legend, Tooltip);
 
@@ -12,7 +12,7 @@ const SpendingChart = () => {
 
     useEffect(() => {
         const fetchSpendingData = async () => {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             if (!token) {
                 console.error('Authorization token is missing');
                 alert('You are not logged in. Please log in to view this data.');
@@ -64,7 +64,7 @@ const SpendingChart = () => {
 
             const context = chartRef.current.getContext('2d');
             chartInstance.current = new ChartJS(context, {
-                type: 'pie',
+                type: 'doughnut',
                 data: chartData,
                 options: {
                     responsive: true,
@@ -88,13 +88,8 @@ const SpendingChart = () => {
     return (
         <div>
             <Navbar />
-            <div style={{ width: '600px', height: '600px' }}>
+            <div style={{ width: '500px', height: '500px', marginTop: '100px' }}>
                 <canvas ref={chartRef}></canvas>
-            </div>
-            <div className="back-to-home">
-                <Link to="/homepage">
-                    <button>Back to Homepage</button>
-                </Link>
             </div>
         </div>
     );
