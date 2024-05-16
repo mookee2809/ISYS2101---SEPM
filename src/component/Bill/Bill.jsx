@@ -9,6 +9,8 @@ export const Bill = () => {
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     const fetchUnpaidBills = async () => {
@@ -27,6 +29,7 @@ export const Bill = () => {
         }
         const data = await response.json();
         setBills(data);
+        setCategories([...new Set(data.map(bill => bill.category))]); // Extract unique categories
       } catch (error) {
         setError(`Failed to fetch unpaid bills: ${error.message}`);
       } finally {
@@ -52,8 +55,11 @@ export const Bill = () => {
         const errorData = await response.json();
         throw new Error(`Failed to pay bill: ${errorData.message || response.statusText}`);
       }
-      // Remove the paid bill from the state
+      setBills(prevBills => prevBills.map(bill => (bill._id === billId ? { ...bill, isPaid: true } : bill)));
+      
+      // Immediate UI update
       setBills(prevBills => prevBills.filter(bill => bill._id !== billId));
+
       alert('Bill paid successfully!');
     } catch (error) {
       alert(`Failed to pay bill: ${error.message}`);
@@ -73,12 +79,12 @@ export const Bill = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error(`Error response:`, errorData);
-        throw new Error(`Failed to remove bill: ${errorData.message || response.statusText}`);
+        const errorText = await response.text();
+        throw new Error(`Failed to remove bill: ${errorText}`);
       }
-      // Remove the bill from the state
+
       setBills(prevBills => prevBills.filter(bill => bill._id !== billId));
+
       alert('Bill removed successfully!');
     } catch (error) {
       console.error(`Error removing bill:`, error);
@@ -86,6 +92,14 @@ export const Bill = () => {
       setError(error.message);
     }
   };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const filteredBills = selectedCategory
+    ? bills.filter(bill => bill.category === selectedCategory)
+    : bills;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -96,7 +110,19 @@ export const Bill = () => {
       <div className='about-container'>
         <div className='header'>
           <div className='text'> Bill Reminder $ </div>
+
+          <div>
+            <label htmlFor="category-select" style={{fontSize:'20px', fontWeight:'500'}} >Filter by category: </label>
+            <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+              <option value="">All</option>
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+
           <div className='bill-option'>
+            <p>Category</p>
             <p>Bill To Pay</p>
             <p>Price</p>
             <p>Due Date</p>
@@ -104,16 +130,17 @@ export const Bill = () => {
             <p>Remove</p>
           </div>
           <hr />
-          {bills.map((bill, index) => (
+          {filteredBills.map((bill, index) => (
             <div key={index} className='bill-format'>
+              <p>{bill.category}</p>
               <p>{bill.description}</p>
               <p>${bill.amount.toFixed(2)}</p>
               <p>{new Date(bill.dueDate).toLocaleDateString()}</p>
-              <button onClick={() => handlePayBill(bill._id)}>
-                <img src={tick_icon} style={{ height: '25px', width: '25px' }} alt="Pay Bill" />
+              <button style={{width:'200px', marginLeft:'25px'}} onClick={() => handlePayBill(bill._id)}>
+                <img src={tick_icon} style={{ height: '25px', width: '35px' }} alt="Pay Bill" />
               </button>
-              <button onClick={() => handleRemoveBill(bill._id)}>
-                <img src={remove_icon} style={{ height: '25px', width: '20px' }} alt="Remove Bill" />
+              <button style={{width:'200px',  marginLeft:'25px'}} onClick={() => handleRemoveBill(bill._id)}>
+                <img src={remove_icon} style={{ height: '25px', width: '30px' }} alt="Remove Bill" />
               </button>
             </div>
           ))}

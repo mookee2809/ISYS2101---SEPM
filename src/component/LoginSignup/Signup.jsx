@@ -51,7 +51,7 @@ export const Signup = () => {
                         <input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
                 </div>
-                <div className='forgot-password'> Already Have Account? <span> <Link to="/"> Log in Here!</Link></span></div>
+                <div className='forgot-password'> Already Have Account? <span> <Link to="/" style={{color:'black'}}> Log in Here!</Link></span></div>
                 <div className="submit-container">
                 <button type="submit" className="submit">Sign Up</button>
                 </div>

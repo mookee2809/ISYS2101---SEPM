@@ -88,8 +88,8 @@ export const AddBill = () => {
             <br/><br/>
             <input type="date" name="date" style={{height: "25px", width: "300px", textAlign: "center"}}/>
             <br/><br/>
-            <button type="submit" className="submit1" style={{color: 'white'}}>Submit</button>
-            <Link to='/homepage' className="submit1" style={{color: 'white'}}>Back to Homepage</Link>
+            <button type="submit" className="submit" style={{color: 'white'}}>Submit</button>
+            <Link to='/homepage' className="submit" style={{color: 'white', marginTop:'50px', marginBottom:'30px'}}>Back to Homepage</Link>
           </form>
         </div>
       </div>

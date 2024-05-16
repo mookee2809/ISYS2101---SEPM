@@ -1,9 +1,12 @@
 .bill-option{
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
     align-items: center;
-    gap: 100px;
-    padding: 20px 0px;
+    width: 100%;
+}
+#category-select{
+    font-size: 20px;
+    margin-bottom: 100px;
 }
 hr{
     color: black;
@@ -12,14 +15,10 @@ hr{
 }
 .bill-format{
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
     align-items: center;
-    gap: 40px;
-    padding: 20px 0px;
+    width: 100%;
 
-}
-.bill-format img{
-   margin-left: 70px;
 }
 .about-container1{
     display:flex;

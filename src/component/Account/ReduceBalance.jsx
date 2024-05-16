@@ -100,4 +100,3 @@ export const ReduceBalance = () => {
 
 
 export default ReduceBalance;
-

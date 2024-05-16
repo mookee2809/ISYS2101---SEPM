@@ -1,23 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart as ChartJS, PieController, ArcElement, Legend, Tooltip } from 'chart.js';
+import Navbar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
 
 ChartJS.register(PieController, ArcElement, Legend, Tooltip);
 
-const SpendingChart = ({ refreshTrigger }) => {
+const SpendingChart = () => {
     const chartRef = useRef(null);
     const [chartData, setChartData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
     const chartInstance = useRef(null);
 
     useEffect(() => {
         const fetchSpendingData = async () => {
-            setLoading(true);
-            setError('');
             const token = sessionStorage.getItem('token');
             if (!token) {
-                setError('You are not logged in. Please log in to view this data.');
-                setLoading(false);
+                console.error('Authorization token is missing');
+                alert('You are not logged in. Please log in to view this data.');
                 return;
             }
 
@@ -51,13 +49,12 @@ const SpendingChart = ({ refreshTrigger }) => {
                     }]
                 });
             } catch (error) {
-                setError('Error fetching spending data: ' + error.message);
+                console.error('Error fetching spending data:', error);
             }
-            setLoading(false);
         };
 
         fetchSpendingData();
-    }, [refreshTrigger]);
+    }, []);
 
     useEffect(() => {
         if (chartRef.current && chartData) {
@@ -74,6 +71,11 @@ const SpendingChart = ({ refreshTrigger }) => {
                     plugins: {
                         legend: {
                             position: 'top',
+                        labels:{
+                            font:{
+                                size: 18,
+                            }
+                        }
                         },
                         tooltip: {}
                     }
@@ -84,22 +86,13 @@ const SpendingChart = ({ refreshTrigger }) => {
         return () => {
             if (chartInstance.current) {
                 chartInstance.current.destroy();
-                chartInstance.current = null;
             }
         };
     }, [chartData]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
         <div>
-            <div style={{ width: '500px', height: '500px', marginTop: '100px' }}>
+            <div style={{ width: '500px', height: '500px', marginTop: '50px', marginBottom:'50px' }}>
                 <canvas ref={chartRef}></canvas>
             </div>
         </div>

@@ -46,8 +46,8 @@ export const Login = () => {
                         <input type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
                 </div>
-                <div className="forgot-password">Forgot Password?<span> <Link to="/Forgotpass">Click Here!</Link> </span></div>
-                <div className='forgot-password'> No account yet? <span> <Link to="/signup">Sign Up Here!</Link></span></div>
+                <div className="forgot-password">Forgot Password?<span> <Link to="/Forgotpass" style={{color:'black'}}>Click Here!</Link> </span></div>
+                <div className='forgot-password'> No account yet? <span> <Link to="/signup" style={{color:'black'}}>Sign Up Here!</Link></span></div>
                 <div className="submit-container">
                     <button type="submit" className="submit">Login</button>
                 </div>

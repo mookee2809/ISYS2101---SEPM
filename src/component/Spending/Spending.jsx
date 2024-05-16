@@ -98,7 +98,7 @@ export const Spending = () => {
           <div className='text'>Total Spending History $</div>
           <SpendingChart refreshTrigger={refreshTrigger} />
           <div>
-            <label htmlFor="category-select">Filter by category:</label>
+            <label htmlFor="category-select" style={{fontSize:'20px', fontWeight:'500'}}>Filter By Category: </label>
             <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
               <option value="">All</option>
               {categories.map(category => (
@@ -106,6 +106,14 @@ export const Spending = () => {
               ))}
             </select>
           </div>
+          <div className='spending-format'>
+          <p> Transaction </p>
+          <p> Category </p>
+          <p> Amount </p>
+          <p> Date </p>
+          <p> Remove </p>
+          </div>
+          <hr></hr>
           {loading && <p>Loading transactions...</p>}
           {error && <p>Error: {error}</p>}
           {!loading && !error && filteredTransactions.length > 0 ? (
@@ -134,4 +142,3 @@ export const Spending = () => {
 };
 
 export default Spending;
-

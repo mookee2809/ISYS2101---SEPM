@@ -96,15 +96,19 @@ const Homepage = () => {
                             <br />
                             ${balance.toFixed(2)}
                         </h3>
-                        <div className='button'><Link to="/Account">Check Details!</Link></div>
+                        <div className='button'><Link to="/Account" style={{color:'black'}}>Check Details!</Link></div>
                     </div>
                     <div className="about-col">
-                        <h3>Total Spending $ {totalSpending.toFixed(2)}</h3>
-                        <div className='button'><Link to="/Spending">Check Details!</Link></div>
+                        <h3>Total Spending $
+                            <br></br>
+                             {totalSpending.toFixed(2)}</h3>
+                        <div className='button' ><Link to="/Spending" style={{color:'black'}}>Check Details!</Link></div>
                     </div>
                     <div className="about-col">
-                        <h3>Total Bills Amount $ {totalBillsAmount.toFixed(2)}</h3>
-                        <div className='button'><Link to="/Bill">Check Bill Details!</Link></div>
+                        <h3>Total Bills Amount $
+                            <br></br>
+                             {totalBillsAmount.toFixed(2)}</h3>
+                        <div className='button'><Link to="/Bill" style={{color:'black'}}>Check Bill Details!</Link></div>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
     margin: auto;
     text-align: center;
     padding-top: 1px;
-  }
+}
   .balance {
     margin-top: 3%;
     display: flex;
@@ -61,4 +61,29 @@
   }
   a{
     text-decoration: none;
+    color: white;
+  }
+  a:hover{
+    color: black;
+    transition: 1s;
+  }
+  @media screen and (max-width: 550px) and (min-width: 300px) {
+    .balance {
+      margin-top: 3%;
+      display: contents;
+      justify-content: space-around
+    }
+    .about-col {
+      flex-basis: 28%;
+      background: white;
+      width: 80%;
+      margin-left: 35px;
+      border-radius: 10px;
+      margin-bottom: 5%;
+      padding: 20px 12px;
+      box-sizing: border-box;
+      box-shadow: 0 15px 35px rgb(0, 0, 0);
+    }
+    
+
   }
