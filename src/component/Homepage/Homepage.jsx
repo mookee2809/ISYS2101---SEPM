@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import './Hompage.css';
 
 const Homepage = () => {
+    const [initialBalance, setInitialBalance] = useState(0);
     const [balance, setBalance] = useState(0);
     const [totalSpending, setTotalSpending] = useState(0);
     const [totalBillsAmount, setTotalBillsAmount] = useState(0);
@@ -14,14 +15,16 @@ const Homepage = () => {
         if (token) {
             const user = decodeJWT(token);
             if (user && user.username) {
-                fetchBalance(token);
-                fetchSpendingData(token);
-                fetchTotalBillsAmount(token);
+                fetchInitialData(token);
             } else {
                 console.log('Username not found in JWT');
             }
         }
     }, []);
+
+    const fetchInitialData = async (token) => {
+        await Promise.all([fetchBalance(token), fetchSpendingData(token), fetchUnpaidBills(token)]);
+    };
 
     const fetchBalance = async (token) => {
         try {
@@ -32,7 +35,8 @@ const Homepage = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                setBalance(data.balance);
+                setInitialBalance(data.balance);
+                setBalance(data.balance - totalSpending);
             } else {
                 throw new Error(data.message || 'Unable to fetch balance');
             }
@@ -52,6 +56,7 @@ const Homepage = () => {
             if (response.ok) {
                 const total = data.reduce((acc, item) => acc + item.amount, 0);
                 setTotalSpending(total);
+                setBalance(initialBalance - total);
             } else {
                 throw new Error(data.message || 'Unable to fetch spending data');
             }
@@ -60,16 +65,19 @@ const Homepage = () => {
         }
     };
 
-    const fetchTotalBillsAmount = async (token) => {
+    const fetchUnpaidBills = async (token) => {
         try {
-            const response = await fetch('http://localhost:5000/api/bills/totalAmount', {
+            const response = await fetch('http://localhost:5000/api/bills/unpaid', {
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                },
+                    'Content-Type': 'application/json'
+                }
             });
             const data = await response.json();
             if (response.ok) {
-                setTotalBillsAmount(data.totalAmount);
+                const totalAmount = data.reduce((acc, bill) => acc + bill.amount, 0);
+                setTotalBillsAmount(totalAmount);
             } else {
                 throw new Error(data.message || 'Unable to fetch total bills amount');
             }
@@ -81,23 +89,22 @@ const Homepage = () => {
     return (
         <div>
             <Navbar />
-
             <div className='option'>
-                <div class="balance">
-                    <div class="about-col">
+                <div className="balance">
+                    <div className="about-col">
                         <h3>Account Balance
-                            <br></br>
+                            <br />
                             ${balance.toFixed(2)}
                         </h3>
-                        <div className='button'><Link to="/Account"> Check Details ! </Link></div>
+                        <div className='button'><Link to="/Account">Check Details!</Link></div>
                     </div>
-                    <div class="about-col">
+                    <div className="about-col">
                         <h3>Total Spending $ {totalSpending.toFixed(2)}</h3>
-                        <div className='button'><Link to="/Spending"> Check Details ! </Link></div>
+                        <div className='button'><Link to="/Spending">Check Details!</Link></div>
                     </div>
-                    <div class="about-col">
+                    <div className="about-col">
                         <h3>Total Bills Amount $ {totalBillsAmount.toFixed(2)}</h3>
-                        <div className='button'><Link to="/Bill"> Check Bill Details !</Link></div>
+                        <div className='button'><Link to="/Bill">Check Bill Details!</Link></div>
                     </div>
                 </div>
             </div>
