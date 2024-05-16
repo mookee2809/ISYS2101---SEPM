@@ -10,7 +10,7 @@ export const Spending = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [refreshTrigger, setRefreshTrigger] = useState(0); // Trigger for refreshing the chart
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -45,7 +45,7 @@ export const Spending = () => {
 
         const data = await response.json();
         setTransactions(data);
-        setCategories([...new Set(data.map(transaction => transaction.category))]); // Extract unique categories
+        setCategories([...new Set(data.map(transaction => transaction.category))]);
       } catch (error) {
         setError(`Failed to fetch transactions: ${error.message}`);
         setLoading(false);
@@ -73,7 +73,7 @@ export const Spending = () => {
         throw new Error(`Failed to remove transaction: ${errorData.message || response.statusText}`);
       }
       setTransactions(prevTransactions => prevTransactions.filter(transaction => transaction._id !== transactionId));
-      setRefreshTrigger(prev => prev + 1); // Update the refresh trigger to refresh the chart
+      setRefreshTrigger(prev => prev + 1); 
       alert('Transaction removed successfully!');
     } catch (error) {
       console.error(`Error removing transaction:`, error);
@@ -134,3 +134,4 @@ export const Spending = () => {
 };
 
 export default Spending;
+
